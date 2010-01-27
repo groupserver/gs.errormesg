@@ -22,18 +22,19 @@ class NotFound(BrowserView):
         self.context = context
         self.request = request
         self.siteInfo = createObject('groupserver.SiteInfo', context)
-        
+        print 'Here'
         self.requested = request.form.get('q', '')
-        
-        self.referer = request.form.get('r', '')
-        #self.referer = self.request.get('HTTP_REFERER', '')
-        self.refererUrl = urlparse(self.referer)
 
+        print 'Here 1'
+        self.referer = request.form.get('r', '')
+        self.refererUrl = urlparse(self.referer)
+	print 'Here 2'
         self.__problem = None
 
     def quote(self, msg):
         assert msg
-        retval = quote(mesg)
+	print 'Elsewhere 1'
+        retval = quote(msg)
         assert retval
         return retval
 
@@ -61,16 +62,18 @@ class NotFound(BrowserView):
 
     @property
     def problem(self):
+	print 'There'
         if self.__problem == None:
+            print 'There 1'
             if self.internalRequest:
-                self.__problem = internal
+                self.__problem = self.internal
             elif self.userRequest:
-                self.__problem = user
+                self.__problem = self.user
             elif self.searchRequest:
-                self.__problem = search
+                self.__problem = self.search
             else:
-                self.__problem = external
-        assert self.__problem in (internal, external, search, user)
+                self.__problem = self.external
+        assert self.__problem in (self.internal, self.external, self.search, self.user)
         return self.__problem
         
     def __call__(self, *args, **kw):

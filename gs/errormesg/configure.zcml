@@ -8,7 +8,7 @@
   <!-- The Not Found (404) page -->
   <browser:page 
     for="*" 
-    name="not_found.html"
+    name="new_not_found.html"
     class=".notfound.NotFound" 
     permission="zope2.Public" />
 

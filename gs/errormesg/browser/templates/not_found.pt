@@ -39,9 +39,9 @@
               tal:attributes="href view/requested" 
               tal:content="view/requested">http://some.site/</a></code>
           could not be found.</p>
-        <div id="user">
+        <div id="user" tal:condition="python:view.problem == view.user">
           <p>A couple of things could have gone wrong.</p>
-          <ul tal:condition="python:view.problem == view.user">
+          <ul>
             <li>If you <strong>typed</strong> the address into the browser
               check the address to make sure the are no mistakes in 
               it.
@@ -76,7 +76,7 @@
             on</a>
           may be able to correct the link.  
         </p><!--external-->
-        <p tal:condition="view/internalRequest" id="internal"
+        <p tal:condition="python:view.problem==view.internal" id="internal"
           tal:define="m string:Hi! The link I followed from ${view/referer} to ${view/requested} was broken and I saw a Page Not Found (404) error.;
             msg python:view.quote(m)">
           <strong>We made a mistake</strong> so the link that you followed
@@ -87,7 +87,7 @@
             tal:attributes="href string:mailto:${supportEmail}?Subject=Broken%20Link&amp;body=${msg}"
             class="email">contact us</a> 
           we will get back to you when the link is fixed.
-        </p>
+        </p><!--internal-->
         <p>No matter what happens, you can always use 
           <a href="/s" title="Search on this site">search</a> on this site
           to try and find the page you are looking for.</p>
