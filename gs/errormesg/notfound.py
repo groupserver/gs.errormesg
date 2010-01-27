@@ -22,18 +22,16 @@ class NotFound(BrowserView):
         self.context = context
         self.request = request
         self.siteInfo = createObject('groupserver.SiteInfo', context)
-        print 'Here'
+
         self.requested = request.form.get('q', '')
 
-        print 'Here 1'
         self.referer = request.form.get('r', '')
         self.refererUrl = urlparse(self.referer)
-	print 'Here 2'
+
         self.__problem = None
 
     def quote(self, msg):
         assert msg
-	print 'Elsewhere 1'
         retval = quote(msg)
         assert retval
         return retval
@@ -62,9 +60,7 @@ class NotFound(BrowserView):
 
     @property
     def problem(self):
-	print 'There'
         if self.__problem == None:
-            print 'There 1'
             if self.internalRequest:
                 self.__problem = self.internal
             elif self.userRequest:
