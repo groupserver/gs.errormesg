@@ -25,8 +25,9 @@ class NotFound(BrowserView):
 
         self.requested = request.form.get('q', '')
 
-        self.referer = request.form.get('r', '')
-        self.refererUrl = urlparse(self.referer)
+        r = request.form.get('r', '')
+        self.referer = type(r) == list and r[0] or r
+        self.refererUrl = urlparse('')#self.referer)
 
         self.__problem = None
 
