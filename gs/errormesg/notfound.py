@@ -2,6 +2,7 @@
 import re
 from urlparse import urlparse
 from zope.component import createObject
+from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 
 class NotFound(BrowserView):
@@ -18,19 +19,24 @@ class NotFound(BrowserView):
         self.siteInfo = createObject('groupserver.SiteInfo', context)
         self.referer = self.request.get('HTTP_REFERER', '')
         self.refererUrl = urlparse(self.referer)
+        print dir(request)
+        print request.form
+        print request.environ
+
 
     @property
     def internalRequest(self):
-        siteNetloc = urlparse(self.siteInfo.url).netloc
-        retval = self.refererUrl.netloc == siteNetloc
+        siteNetloc = urlparse(self.siteInfo.url)[1]
+        retval = self.refererUrl[1] == siteNetloc
         assert type(retval) == bool
         return retval
 
     @property
     def searchRequest(self):
-        matches = [regexp.match(self.refererUrl.netloc) != None 
-                    for regexp in self.serchEngines]
-        retval =  reduce(lamda a, b: a or b, matches, False)
+        netloc = self.refererUrl[1]
+        matches = [sere.match(netloc) != None 
+                   for sere in self.searchEngines]
+        retval =  reduce(lambda a, b: a or b, matches, False)
         assert type(retval) == bool
         return retval
 
@@ -52,4 +58,24 @@ class NotFound(BrowserView):
         self.request.response.setHeader('Content-Type', contentType)
         self.request.response.setStatus(404, lock=True)
         return self.index(self, *args, **kw)
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

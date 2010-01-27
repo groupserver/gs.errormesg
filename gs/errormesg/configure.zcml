@@ -6,8 +6,11 @@
   xmlns:five="http://namespaces.zope.org/five">
   
   <!-- The Not Found (404) page -->
-  <browser:page for="*" name="not_found.html"
-    class="notfound.NotFound" permission="zope2.Public" />
+  <browser:page 
+    for="*" 
+    name="not_found.html"
+    class=".notfound.NotFound" 
+    permission="zope2.Public" />
 
 </configure>
 

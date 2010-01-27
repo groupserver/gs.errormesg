@@ -5,7 +5,8 @@
   <tal:block metal:use-macro="context/@@groupserver_site_home_layout/page">
     <head>
       <title metal:fill-slot="title">
-        <span tal:replace="siteName"/>: Page Not Found (404)
+        Page Not Found (404):
+        <span tal:replace="siteName"/>
       </title>
       
       <tal:block metal:fill-slot="metadata">
@@ -31,7 +32,7 @@
         <h1>Page Not Found</h1>
 
         <p>Sorry, the page you were trying to get to 
-          (<code class="url" tal:content="view/request/url"/>)
+          (<code class="url" tal:content="view/request/URL"/>)
           could not be found.</p>
         <ul tal:condition="view/userRequest" id="user">
           <li>If you <strong>typed</strong> the address, or followed a
@@ -57,7 +58,7 @@
           tal:define="siteId view/siteInfo/id;
             gse python:modules['Products.XWFCore.XWFUtils'].get_support_email;
             supportEmail python:gse(context,siteId);
-            m string:The link I followed from ${view/request/HTTP_REFERER} to ${view/request/url} was broken and I saw a Page Not Found error!;
+            m string:The link I followed from ${view/request/HTTP_REFERER} to ${view/request/URL} was broken and I saw a Page Not Found error!;
             msg python:m.replace(' ', '%20')">
           We made a mistake when we created the link that you followed.
           The system has automatically made a note of our error, but if 
