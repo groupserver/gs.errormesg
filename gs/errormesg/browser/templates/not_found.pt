@@ -6,7 +6,7 @@
     <head>
       <title metal:fill-slot="title">
         Page Not Found (404):
-        <span tal:replace="siteName"/>
+        <tal:block replace="siteName"/>
       </title>
       
       <tal:block metal:fill-slot="metadata">
@@ -28,47 +28,71 @@
       <div metal:fill-slot="breadcrumb" />
       <div metal:fill-slot="footer"/>
       
-      <div metal:fill-slot="body">
+      <div metal:fill-slot="body"
+        tal:define="siteId view/siteInfo/id;
+          gse python:modules['Products.XWFCore.XWFUtils'].get_support_email;
+          supportEmail python:gse(context,siteId);">
         <h1>Page Not Found</h1>
 
-        <p>Sorry, the page you were trying to get to 
-          (<code class="url" tal:content="view/request/URL"/>)
+        <p id="appology">Sorry, the page you were trying to get to 
+          <code class="url"><a href="#" 
+              tal:attributes="href view/requested" 
+              tal:content="view/requested">http://some.site/</a></code>
           could not be found.</p>
-        <ul tal:condition="view/userRequest" id="user">
-          <li>If you <strong>typed</strong> the address, or followed a
-            <strong>bookmark</strong>, check the address 
-            to ensure the are no mistakes in it.</li>
-          <li>If you clicked on a link in an <strong>email</strong> check
-            that the link is not split over multiple lines.</li>
-        </ul><!--user-->
-        <p tal:condition="view/searchRequest" id="search">
-          The search results that you used contained links to pages that
-          do not exist.
+        <div id="user">
+          <p>A couple of things could have gone wrong.</p>
+          <ul tal:condition="python:view.problem == view.user">
+            <li>If you <strong>typed</strong> the address into the browser
+              check the address to make sure the are no mistakes in 
+              it.
+              You will have to retype the address if there are any 
+              mistakes.</li>
+            <li>If you clicked on a link in an <strong>email</strong> check
+              that the link is not split over multiple lines. 
+              If it is you will have to correct it to ensure it is not
+              split over multiple lines.</li>
+          </ul>
+          <p>If you are still having trouble 
+            <a href="#" 
+              tal:define="m string:Hi! I went to the address ${view/requested} and I saw a Page Not Found (404) error. I want to see... I found the link in...;
+            msg python:view.quote(m)"
+              tal:attributes="href string:mailto:${supportEmail}?Subject=Broken%20Address&amp;body=${msg}">email
+                support</a> 
+            with the specifics of your problem, and we will see what we
+            can do to help. 
+          </p>
+        </div><!--user-->
+        <p tal:condition="python:view.problem == view.search" id="search">
+          The <strong>search results</strong> that you used contained 
+          links to pages that do not exist.
           Hopefully this problem will be automatically fixed over time.  
         </p><!--search-->
-        <p tal:condition="view/externalRequest" id="external">
+        <p tal:condition="python:view.problem == view.external"
+          id="external">
           The link you followed went to this site, but the specific page
           could not be found.
-          The administrator of 
-          <a tal:attributes="href view/request/HTTP_REFERER" href="#">the
-            page you were on</a>
+          The person who wrote 
+          <a tal:attributes="href view/referer" href="#">the page you were
+            on</a>
           may be able to correct the link.  
         </p><!--external-->
         <p tal:condition="view/internalRequest" id="internal"
-          tal:define="siteId view/siteInfo/id;
-            gse python:modules['Products.XWFCore.XWFUtils'].get_support_email;
-            supportEmail python:gse(context,siteId);
-            m string:The link I followed from ${view/request/HTTP_REFERER} to ${view/request/URL} was broken and I saw a Page Not Found error!;
-            msg python:m.replace(' ', '%20')">
-          We made a mistake when we created the link that you followed.
+          tal:define="m string:Hi! The link I followed from ${view/referer} to ${view/requested} was broken and I saw a Page Not Found (404) error.;
+            msg python:view.quote(m)">
+          <strong>We made a mistake</strong> so the link that you followed
+          did not go where it should.
           The system has automatically made a note of our error, but if 
           you 
-          <a href="#" 
-            tal:attributes="href string:mailto:${supportEmail}?Subject=Broken%20Link&body=${msg}"
+          <a href="#" title="Email support on this site"
+            tal:attributes="href string:mailto:${supportEmail}?Subject=Broken%20Link&amp;body=${msg}"
             class="email">contact us</a> 
           we will get back to you when the link is fixed.
         </p>
-        <p>If you want to get all technical about it, 
+        <p>No matter what happens, you can always use 
+          <a href="/s" title="Search on this site">search</a> on this site
+          to try and find the page you are looking for.</p>
+          
+        <p id="technical">If you want to get all technical about it, 
           <code>404 Not Found</code>. 
           Make of that what you will. 
         </p>
@@ -76,3 +100,4 @@
     </body>
   </tal:block>
 </html>
+
