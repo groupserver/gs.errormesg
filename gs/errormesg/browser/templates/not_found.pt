@@ -66,9 +66,10 @@
           </p>
         </div><!--user-->
         <p id="search" tal:condition="python:view.problem == view.search">
-          The <strong>search results</strong> that you used contained 
-          links to pages that do not exist.
-          Hopefully this problem will be automatically fixed over time.  
+          The <strong>search results</strong> that you used contained a
+          link to a page that does not exist.
+          Hopefully this problem will be automatically fixed by the 
+          search system.  
         </p><!--search-->
         <p id="external" 
           tal:condition="python:view.problem == view.external">
@@ -91,10 +92,6 @@
             class="email">contact us</a> 
           we will get back to you when the link is fixed.
         </p><!--internal-->
-        <!--Search is always an option-->
-        <p>No matter what happens, you can always use 
-          <a href="/s" title="Search on this site">search</a> on this site
-          to try and find the page you are looking for.</p>
         <!--Lastly, give the technical details about the error. Bots may-->
         <!--find this useful.-->
         <p id="technical">If you want to get all technical about it, 

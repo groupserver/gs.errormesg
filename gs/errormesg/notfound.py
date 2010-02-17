@@ -9,8 +9,8 @@ from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 class NotFound(BrowserView):
     index = ZopeTwoPageTemplateFile('browser/templates/not_found.pt')
     searchEngines = [
-        re.compile('[a-z]*\.?search\.yahoo\.com'),
-        re.compile('www.google\.com\.?[a-z]*'),
+        re.compile('.*search\.yahoo\.com'),
+        re.compile('www.google\.com'),
         re.compile('www.bing.com')
     ]
     internal = 1
@@ -27,7 +27,7 @@ class NotFound(BrowserView):
 
         r = request.form.get('r', '')
         self.referer = type(r) == list and r[0] or r
-        self.refererUrl = urlparse('')#self.referer)
+        self.refererUrl = urlparse(self.referer)
 
         self.__problem = None
 
@@ -70,7 +70,8 @@ class NotFound(BrowserView):
                 self.__problem = self.search
             else:
                 self.__problem = self.external
-        assert self.__problem in (self.internal, self.external, self.search, self.user)
+        assert self.__problem in (self.internal, self.external,
+                                    self.search, self.user)
         return self.__problem
         
     def __call__(self, *args, **kw):
