@@ -36,9 +36,7 @@
 
         <!--Appologise, and state what went wrong -->
         <p id="appology">Sorry, the page you were trying to get to 
-          <code class="url"><a href="#" 
-              tal:attributes="href view/requested" 
-              tal:content="view/requested">http://some.site/</a></code>
+          <code class="url" tal:content="view/requested">http://some.site</code>
           could not be found.</p>
         <!-- Give a detailed explanation about what went wrong, and -->
         <!--   what can be done.-->
