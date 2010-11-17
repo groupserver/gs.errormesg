@@ -2,11 +2,10 @@
 import re
 from urlparse import urlparse
 from urllib import quote
-from zope.component import createObject
-from Products.Five import BrowserView
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from baseerror import BaseErrorPage
 
-class NotFound(BrowserView):
+class NotFound(BaseErrorPage):
     index = ZopeTwoPageTemplateFile('browser/templates/not_found.pt')
     searchEngines = [
         re.compile('.*search\.yahoo\.com'),
@@ -19,9 +18,7 @@ class NotFound(BrowserView):
     user = 4
 
     def __init__(self, context, request):
-        self.context = context
-        self.request = request
-        self.siteInfo = createObject('groupserver.SiteInfo', context)
+        BaseErrorPage.__init__(self, context, request)
 
         self.requested = request.form.get('q', '')
 
