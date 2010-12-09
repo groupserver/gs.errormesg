@@ -8,32 +8,28 @@
         Page Not Found (404):
         <tal:block replace="siteName"/>
       </title>
-      
       <tal:block metal:fill-slot="metadata">
         <meta name="author" content="OnlineGroups.Net" />
         <meta name="description" content="Page not found page" />
       </tal:block>
-      
     </head>
     <body>
-      <div metal:fill-slot="externallinks" />
       <div metal:fill-slot="sitenavigation" id="sitenavigation">
         <ul>
-          <li>
+          <li class="ui-state-default ui-corner-top">
             <a href="/">Home</a>
           </li>
         </ul>
       </div>
-      <div metal:fill-slot="contextnavigation" />
-      <div metal:fill-slot="breadcrumb" />
-      <div metal:fill-slot="footer"/>
-      
+      <div metal:fill-slot="externallinks">&#160;</div>
+      <div metal:fill-slot="contextnavigation">&#160;</div>
+      <div metal:fill-slot="breadcrumb">&#160;</div>
+      <div metal:fill-slot="footer">&#160;</div>
       <div metal:fill-slot="body"
         tal:define="siteId view/siteInfo/id;
           gse python:modules['Products.XWFCore.XWFUtils'].get_support_email;
           supportEmail python:gse(context,siteId);">
         <h1>Page Not Found</h1>
-
         <!--Appologise, and state what went wrong -->
         <p id="appology">Sorry, the page you were trying to get to 
           <code class="url" tal:content="view/requested">http://some.site</code>
@@ -54,7 +50,7 @@
               split over multiple lines.</li>
           </ul>
           <p>If you are still having trouble 
-            <a href="#" 
+            <a href="#" class="email"
               tal:define="m string:Hi! I went to the address ${view/requested} and I saw a Page Not Found (404) error. I want to see... I found the link in...;
             msg python:view.quote(m)"
               tal:attributes="href string:mailto:${supportEmail}?Subject=Broken%20Address&amp;body=${msg}">email
