@@ -14,8 +14,9 @@
       </tal:block>
     </head>
     <body>
-      <div metal:fill-slot="sitenavigation" id="sitenavigation">
-        <ul>
+      <div metal:fill-slot="sitenavigation" id="sitenavigation"
+        class="tabs ui-tabs ui-widget">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
           <li class="ui-state-default ui-corner-top">
             <a href="/">Home</a>
           </li>

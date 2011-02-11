@@ -12,5 +12,12 @@
     class=".notfound.NotFound" 
     permission="zope2.Public" />
 
+  <!-- The Unexpected Error (500) page -->
+  <browser:page 
+    for="*" 
+    name="new_unexpected_error.html"
+    class=".unexpected.Unexpected" 
+    permission="zope2.Public" />
+
 </configure>
 
