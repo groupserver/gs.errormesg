@@ -21,8 +21,10 @@ class Unexpected(BaseErrorPage):
         return retval
     @property
     def lastMessageLine(self):
+        retval = u''
         lines = [e for e in self.message.split('\n') if e.strip()]
-        retval = lines[-1]
+        if lines:
+            retval = lines[-1]
         return retval
     def __call__(self, *args, **kw):
         contentType = 'text/html; charset=UTF-8'
