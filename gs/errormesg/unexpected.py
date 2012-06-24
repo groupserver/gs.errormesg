@@ -1,34 +1,34 @@
-# coding=utf-8
-from urllib import quote
+from five import grok
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from baseerror import BaseErrorPage
+from urllib import quote
+import traceback
 
-class Unexpected(BaseErrorPage):
-    index = ZopeTwoPageTemplateFile('browser/templates/unexpected.pt')
-    def __init__(self, context, request):
-        BaseErrorPage.__init__(self, context, request)
+from baseerror import BaseError
+from gs.skin.ogn.ogs.interfaces import IOGSLayer
 
-        self.requested = request.form.get('q', '')
-        self.message = request.form.get('m', '')
+class UnexpectedError(grok.View, BaseError):
+    grok.name('error.html')
+    grok.context(Exception)
+    index = ZopeTwoPageTemplateFile('browser/templates/error.pt')
+    
+    def tracebackMessage(self):
+        # obviously this is only going to work if we're *actually* handling an
+        # exception
+        formatted_tb = traceback.format_exc()
+        return formatted_tb.splitlines()[-1].strip() 
 
-    @property
     def supportMessage(self):
-        m = u'Hi! I saw an Unexpected Error (500) page when I went to '\
+        message = self.tracebackMessage()
+        m = u'Hi! I saw a Server Error (500) page when I went to '\
             u'\n%s\n\nI want to see...\n\n--\n\nThis technical '\
             u'information may help you fix the error:\n\n%s' % \
-            (self.requested, self.message)
+            (self.errorUrl, message)
         retval = quote(m)
+        
         return retval
-    @property
-    def lastMessageLine(self):
-        retval = u''
-        lines = [e for e in self.message.split('\n') if e.strip()]
-        if lines:
-            retval = lines[-1]
-        return retval
-    def __call__(self, *args, **kw):
-        contentType = 'text/html; charset=UTF-8'
-        self.request.response.setHeader('Content-Type', contentType)
-        self.request.response.setStatus(500, lock=True)
-        return self.index(self, *args, **kw)
 
+    def update(self):
+        self.response.setStatus(500)
+
+    def render(self):
+        return self.index(self.context)

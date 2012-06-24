@@ -5,12 +5,12 @@
   <tal:block metal:use-macro="context/@@groupserver_site_home_layout/page">
     <head>
       <title metal:fill-slot="title">
-        Unexpected Error (500):
+        Server Error (500):
         <tal:block replace="siteName"/>
       </title>
       <tal:block metal:fill-slot="metadata">
         <meta name="author" content="OnlineGroups.Net" />
-        <meta name="description" content="Page not found page" />
+        <meta name="description" content="Server error page" />
       </tal:block>
     </head>
     <body>
@@ -22,33 +22,24 @@
           </li>
         </ul>
       </div>
-      <div metal:fill-slot="externallinks">&#160;</div>
-      <div metal:fill-slot="contextnavigation">&#160;</div>
-      <div metal:fill-slot="breadcrumb">&#160;</div>
-      <div metal:fill-slot="footer">&#160;</div>
-      <div metal:fill-slot="body"
-        tal:define="siteId view/siteInfo/id;
-          gse python:modules['Products.XWFCore.XWFUtils'].get_support_email;
-          supportEmail python:gse(context,siteId);">
-        <h1>Unexpected Error</h1>
-        <!--Appologise, and state what went wrong -->
-        <p id="appology">Sorry, there was an error with the page 
-          <code class="url" 
-            tal:content="view/requested">http://some.site</code>
-        </p>
-        <!-- Give a detailed explanation about what went wrong, and -->
-        <!--   what can be done.-->
+      <div metal:fill-slot="utilitylinks">
+        <!-- All links here are supressed to make it less crap -->
+      </div>
+      <div metal:fill-slot="search">
+      </div>
+      <div metal:fill-slot="footer">
+      </div>
+      <div metal:fill-slot="body">
+        <h1>Sorry! We've had trouble producing this page.</h1>
         <div id="todo">
           <p>
             Please
             <a href="#" class="email"
-              tal:attributes="href string:mailto:${supportEmail}?Subject=Unexpected%20Error&amp;body=${view/supportMessage}">email
+              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Unexpected%20Error&amp;body=${view/supportMessage}">email
                 support</a> 
             and we will see what we can do to fix the problem.
           </p>
-        </div><!--todo-->
-        <!--Lastly, give the technical details about the error. Bots may-->
-        <!--find this useful.-->
+        </div>
         <div id="technical">
           <p>Technical Description:
             <code class="error"><span class="val">500</span>
@@ -57,15 +48,14 @@
           <p>
             <span class="detail">URL: 
               <code class="val url"
-                tal:content="view/requested">http://some.site</code></span>
+                tal:content="view/errorUrl">http://some.site</code></span>
           </p>
           <p>Issue:
             <code class="message" 
-              tal:content="view/lastMessageLine">err</code>
+              tal:content="view/tracebackMessage">err</code>
           </p>
         </div><!--technical-->
       </div>
     </body>
   </tal:block>
 </html>
-
