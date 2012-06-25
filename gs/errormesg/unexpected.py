@@ -6,10 +6,11 @@ import traceback
 from baseerror import BaseError
 from gs.skin.ogn.ogs.interfaces import IOGSLayer
 
-class UnexpectedError(grok.View, BaseError):
+class UnexpectedError(BaseError, grok.View):
     grok.name('error.html')
     grok.context(Exception)
     index = ZopeTwoPageTemplateFile('browser/templates/error.pt')
+    status = 500
     
     def tracebackMessage(self):
         # obviously this is only going to work if we're *actually* handling an
@@ -30,5 +31,5 @@ class UnexpectedError(grok.View, BaseError):
     def update(self):
         self.response.setStatus(500)
 
-    def render(self):
-        return self.index(self.context)
+    #def render(self):
+    #    return self.index(self.context)

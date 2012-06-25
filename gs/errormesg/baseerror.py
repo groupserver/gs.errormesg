@@ -12,6 +12,8 @@ class BaseError(object):
         re.compile('www.google\.com'),
         re.compile('www.bing.com'),
     ]
+    # must be set in subclass
+    status = None 
     
     @property
     def siteInfo(self):
@@ -62,15 +64,15 @@ class BaseError(object):
         return retval
 
     def update(self):
-        # Should set the response status is subclass:
-        # self.response.setStatus(SOMESTATUS)
-        raise NotImplementedError
+        self.response.setStatus(self.status)
 
     def supportMessage(self):
         # Should return a support message suitable for email in the subclass.
         raise NotImplementedError
 
     def render(self):
+        # force the return type to be text/html, just in case
+        self.response.setHeader('Content-Type', 'text/html')
         return self.index(self.context)
 
 

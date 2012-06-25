@@ -1,12 +1,11 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
   xmlns:metal="http://xml.zope.org/namespaces/metal"
   xmlns:tal="http://xml.zope.org/namespaces/tal"
-  tal:define="siteName python:view.siteInfo.get_name()">
-  <tal:block metal:use-macro="context/@@groupserver_site_home_layout/page">
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
     <head>
       <title metal:fill-slot="title">
         Not Found (404):
-        <tal:block replace="siteName"/>
+        <tal:block replace="view/siteInfo/get_name"/>
       </title>
       <tal:block metal:fill-slot="metadata-global">
       </tal:block>
@@ -24,10 +23,11 @@
           </li>
         </ul>
       </div>
-      <div metal:fill-slot="externallinks">&#160;</div>
-      <div metal:fill-slot="contextnavigation">&#160;</div>
-      <div metal:fill-slot="breadcrumb">&#160;</div>
-      <div metal:fill-slot="footer">&#160;</div>
+      <div metal:fill-slot="externallinks"></div>
+      <div metal:fill-slot="contextnavigation"></div>
+      <div metal:fill-slot="breadcrumb"></div>
+      <div metal:fill-slot="footer"></div>
+      <div metal:fill-slot="search"></div>
       <div metal:fill-slot="utilitylinks">
         <!-- All links here are supressed to make it less cluttered -->
       </div>
@@ -98,5 +98,4 @@
         </div><!--Technical-->
        </div>
      </body>
-  </tal:block>
 </html>

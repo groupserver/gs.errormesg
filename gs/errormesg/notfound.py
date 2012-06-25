@@ -5,17 +5,12 @@ from urllib import quote
 
 from baseerror import BaseError
 
-class NotFound(grok.View, BaseError):
+class NotFound(BaseError, grok.View):
     grok.name('error.html')
     grok.context(INotFound)
     index = ZopeTwoPageTemplateFile('browser/templates/not_found.pt')
+    status = 404
 
-    def update(self):
-        self.response.setStatus(404)
-
-    def render(self):
-        return self.index(self.context)
-        
     def supportMessage(self):
         m = u'''Hi! I saw a Not Found (404) page when I went to
 %(url)s
