@@ -1,4 +1,5 @@
 from infrae.wsgi.publisher import *
+from zope.publisher.interfaces.browser import IBrowserView
 
 import logging
 log = logging.getLogger('gs.errormesg')
