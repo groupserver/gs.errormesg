@@ -1,5 +1,5 @@
 from five import grok
-from zope.publisher.interfaces import IForbidden
+from zope.security.interfaces import IForbidden
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from urllib import quote
 
