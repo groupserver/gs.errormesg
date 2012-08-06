@@ -34,11 +34,12 @@
       <div metal:fill-slot="body">
         <h1>Unable to access</h1>
         <!--Apologise, and state what went wrong -->
+        <div id="user">
         <p id="apology">Unfortunately, you do not have permission to access 
           <code class="url" tal:content="view/errorUrl">http://some.site</code>.</p>
           <p>If you believe you should have permission, please
             <a href="#" class="email"
-              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Page%20not%20found&amp;body=${view/supportMessage}">email support</a>             and we will see what we can do to fix the problem.
+              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Unable%20to%20access&amp;body=${view/supportMessage}">email support</a>             and we will see what we can do to fix the problem.
           </p>
         </div><!--directRequest-->
         <div id="technical">
