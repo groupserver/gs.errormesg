@@ -1,0 +1,62 @@
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:metal="http://xml.zope.org/namespaces/metal"
+  xmlns:tal="http://xml.zope.org/namespaces/tal"
+  metal:use-macro="context/@@groupserver_site_home_layout/page">
+    <head>
+      <title metal:fill-slot="title">
+        Forbidden (403):
+        <tal:block replace="view/siteInfo/get_name"/>
+      </title>
+      <tal:block metal:fill-slot="metadata-global">
+      </tal:block>
+      <tal:block metal:fill-slot="metadata">
+        <meta name="author" content="OnlineGroups.Net" />
+        <meta name="description" content="Server error page" />
+      </tal:block>
+    </head>
+    <body>
+      <div metal:fill-slot="sitenavigation" id="sitenavigation"
+        class="tabs ui-tabs ui-widget">
+        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
+          <li class="ui-state-default ui-corner-top">
+            <a href="/">Home</a>
+          </li>
+        </ul>
+      </div>
+      <div metal:fill-slot="externallinks"></div>
+      <div metal:fill-slot="contextnavigation"></div>
+      <div metal:fill-slot="breadcrumb"></div>
+      <div metal:fill-slot="footer"></div>
+      <div metal:fill-slot="search"></div>
+      <div metal:fill-slot="utilitylinks">
+        <!-- All links here are supressed to make it less cluttered -->
+      </div>
+      <div metal:fill-slot="body">
+        <h1>Unable to access</h1>
+        <!--Apologise, and state what went wrong -->
+        <p id="apology">Unfortunately, you do not have permission to access 
+          <code class="url" tal:content="view/errorUrl">http://some.site</code>.</p>
+          <p>If you believe you should have permission, please
+            <a href="#" class="email"
+              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Page%20not%20found&amp;body=${view/supportMessage}">email support</a>             and we will see what we can do to fix the problem.
+          </p>
+        </div><!--directRequest-->
+        <div id="technical">
+          <p>Technical Description:
+            <code class="error"><span class="val">403</span>
+              <span class="description">Not Found</span></code>
+          </p>
+          <p>
+            <span class="detail">URL:
+              <code class="val url"
+                tal:content="view/errorUrl">http://some.site</code></span>
+          </p>
+          <p tal:condition="view/refererUrl">
+            <span class="detail">Referer:
+              <code class="val url"
+                tal:content="view/refererUrl">http://some.site</code></span>
+          </p>
+        </div><!--Technical-->
+       </div>
+     </body>
+</html>
