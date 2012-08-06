@@ -23,16 +23,29 @@ class BaseError(object):
 
     @property
     def supportEmail(self):
-        return get_support_email(self.context, self.siteInfo.id)
+        # we pretty much ignore errors. There is bugger all we can do 
+        # about an error in a error
+        try:
+            return get_support_email(self.context, self.siteInfo.id)
+        except:
+            return 'support@'
 
     @property
     def refererUrl(self):
-        return self.context.REQUEST.get('HTTP_REFERER', None)
-
+        # we pretty much ignore errors. There is bugger all we can do 
+        # about an error in a error
+        try:
+            return self.context.REQUEST.get('HTTP_REFERER', 'http://#unknown')
+        except:
+            return 'http://#unknown'
+        
     @property
     def errorUrl(self):
-        return self.context.REQUEST['URL']
-
+        try:
+            return self.context.REQUEST.get('URL', 'http://#unknown')
+        except:
+            return 'http://#unknown'
+        
     @property
     def internalRequest(self):
         refererHost = urlparse(self.refererUrl)[1]
