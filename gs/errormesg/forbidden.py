@@ -6,7 +6,7 @@ from urllib import quote
 from baseerror import BaseError
 
 class Forbidden(BaseError, grok.View):
-    grok.name('forbidden.html')
+    grok.name('error.html')
     grok.context(IForbidden)
     index = ZopeTwoPageTemplateFile('browser/templates/forbidden.pt')
     status = 403
