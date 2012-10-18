@@ -32,7 +32,7 @@ setup(name='gs.errormesg',
     zip_safe=True,
     install_requires=[
         'setuptools',
-        'five',
+        'five.grok',
         'infrae.wsgi',
         'Products.GSContent',
         'zope.component',
