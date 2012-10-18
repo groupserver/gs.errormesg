@@ -1,6 +1,7 @@
 # -*- coding: utf-8 *-*
 from infrae.wsgi.publisher import *
 from zope.publisher.interfaces.browser import IBrowserView
+from baseerror import BaseError  # lint:ok
 
 import logging
 log = logging.getLogger('gs.errormesg')
