@@ -1,9 +1,11 @@
+# -*- coding: utf-8 *-*
 from infrae.wsgi.publisher import *
 from zope.publisher.interfaces.browser import IBrowserView
 
 import logging
 log = logging.getLogger('gs.errormesg')
 log.info('Monkeypatching infrae.wsgi')
+
 
 def error(self, error, last_known_obj):
     """Render and log an error.

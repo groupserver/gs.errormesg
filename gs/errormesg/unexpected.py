@@ -1,22 +1,22 @@
+# -*- coding: utf-8 *-*
+import traceback
+from urllib import quote
 from five import grok
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from urllib import quote
-import traceback
-
 from baseerror import BaseError
-from gs.skin.ogn.ogs.interfaces import IOGSLayer
+
 
 class UnexpectedError(BaseError, grok.View):
     grok.name('error.html')
     grok.context(Exception)
     index = ZopeTwoPageTemplateFile('browser/templates/error.pt')
     status = 500
-    
+
     def tracebackMessage(self):
         # obviously this is only going to work if we're *actually* handling an
         # exception
         formatted_tb = traceback.format_exc()
-        return formatted_tb.splitlines()[-1].strip() 
+        return formatted_tb.splitlines()[-1].strip()
 
     def supportMessage(self):
         message = self.tracebackMessage()
@@ -25,7 +25,7 @@ class UnexpectedError(BaseError, grok.View):
             u'information may help you fix the error:\n\n%s' % \
             (self.errorUrl, message)
         retval = quote(m)
-        
+
         return retval
 
     def update(self):

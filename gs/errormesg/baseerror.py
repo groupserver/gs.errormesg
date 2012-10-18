@@ -1,10 +1,10 @@
-# coding=utf-8
+# -*- coding: utf-8 *-*
+import re
+from urlparse import urlparse
 from zope.component import createObject
 from Products.Five import BrowserView
 from Products.XWFCore.XWFUtils import get_support_email
 
-from urlparse import urlparse
-import re
 
 class BaseError(object):
     searchEngines = [
@@ -12,9 +12,9 @@ class BaseError(object):
         re.compile('www.google\.com'),
         re.compile('www.bing.com'),
     ]
-    # must be set in subclass
-    status = None 
-    
+
+    status = None  # must be set in subclass
+
     @property
     def siteInfo(self):
         siteInfo = createObject('groupserver.SiteInfo',
@@ -23,7 +23,7 @@ class BaseError(object):
 
     @property
     def supportEmail(self):
-        # we pretty much ignore errors. There is bugger all we can do 
+        # we pretty much ignore errors. There is bugger all we can do
         # about an error in a error
         try:
             return get_support_email(self.context, self.siteInfo.id)
@@ -32,20 +32,20 @@ class BaseError(object):
 
     @property
     def refererUrl(self):
-        # we pretty much ignore errors. There is bugger all we can do 
+        # we pretty much ignore errors. There is bugger all we can do
         # about an error in a error
         try:
             return self.context.REQUEST.get('HTTP_REFERER', 'http://#unknown')
         except:
             return 'http://#unknown'
-        
+
     @property
     def errorUrl(self):
         try:
             return self.context.REQUEST.get('URL', 'http://#unknown')
         except:
             return 'http://#unknown'
-        
+
     @property
     def internalRequest(self):
         refererHost = urlparse(self.refererUrl)[1]
@@ -53,8 +53,8 @@ class BaseError(object):
         retval = (refererHost == siteHost) and (not self.directRequest)
 
         return retval
-    
-    @property 
+
+    @property
     def externalRequest(self):
         retval = (not self.internalRequest) and (not self.directRequest)
 
@@ -62,8 +62,8 @@ class BaseError(object):
 
     @property
     def directRequest(self):
-        retval = self.refererUrl in (None, '')       
-        
+        retval = self.refererUrl in (None, '')
+
         return retval
 
     @property
@@ -94,17 +94,17 @@ class BaseErrorPage(BrowserView):
     def __init__(self, context, request):
         BrowserView.__init__(self, context, request)
         self.__siteInfo = self.__supportEmail = None
-    
+
     @property
     def siteInfo(self):
-        if self.__siteInfo == None:
+        if self.__siteInfo is None:
             self.__siteInfo = createObject('groupserver.SiteInfo',
                 self.context)
         return self.__siteInfo
 
     @property
     def supportEmail(self):
-        if self.__supportEmail == None:
+        if self.__supportEmail is None:
             self.__supportEmail = get_support_email(self.context,
                                     self.siteInfo.id)
         return self.__supportEmail

@@ -1,9 +1,10 @@
+# -*- coding: utf-8 *-*
+from urllib import quote
 from five import grok
 from zope.security.interfaces import IForbidden
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
-from urllib import quote
-
 from baseerror import BaseError
+
 
 class Forbidden(BaseError, grok.View):
     grok.name('error.html')
@@ -27,5 +28,5 @@ Referer: %(referer)s
        'referer': self.refererUrl}
 
         retval = quote(m)
-        
+
         return retval
