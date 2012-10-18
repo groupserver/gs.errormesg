@@ -33,7 +33,7 @@ setup(name='gs.errormesg',
     install_requires=[
         'setuptools',
         'five',
-        'infrae.wsgi.publisher',
+        'infrae.wsgi',
         'Products.GSContent',
         'zope.component',
         'zope.publisher',
