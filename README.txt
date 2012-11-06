@@ -28,7 +28,7 @@ messages. One supports `infrae.wsgi`_; it has the advantage of keeping the
 URL that caused the error static, but it requires WSGI to be used as a
 front-end to Zope. The other provides the error pages when WSGI is not
 used. The ``Products.GroupServer.groupserver.GroupserverSite`` class
-catches the errors and redirects to the Not Found or Unexpected pages as
+catches the errors and instantiates to the Not Found or Unexpected pages as
 appropriate.
 
 Not Found (404)
