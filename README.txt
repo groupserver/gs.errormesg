@@ -1,24 +1,35 @@
 Introduction
 ============
 
-The ``gs.errormesg`` product primarily supplies three `error messages`_. 
+The ``gs.errormesg`` product primarily supplies two `error messages`_ for
+GroupServer_.
 
 It also supplies two base classes: ``gs.errormesg.baseerror.BaseErrorPage``
 and the ``gs.errormesg.BaseError`` abstract base class. These classes are
 used to handle errors that are provided by the higher-level
-products. Examples include the Gone (410) error that is returned when a
-person tries to access a hidden post (``gs.group.messages.post``), or the
-Bad Request (400) that is returned if the email-verification ID is missing
-from a request (``gs.profile.email.verify``).
+products. Examples include 
 
-All the errors conform to the same basic `design`_.
+* The Gone (410) error that is returned when a person tries to access a
+  hidden post (``gs.group.messages.post``)
+
+* The Bad Request (400) that is returned if the email-verification ID is
+  missing from a request (``gs.profile.email.verify``).
+
+* The Forbidden (403) error that is handled by the ``gs.login`` system. 
+
+All the errors in conform to the same basic design_.
 
 Error Messages
 ==============
 
-This product supplies the three standard error messages used by
-`GroupServer`_: `Not Found (404)`_, `Forbidden (403)`_, or `Unexpected
-(500)`_. 
+This product supplies the two standard error messages: `Not Found (404)`_,
+and `Unexpected (500)`_. There are two versions of each of these
+messages. One supports `infrae.wsgi`_; it has the advantage of keeping the
+URL that caused the error static, but it requires WSGI to be used as a
+front-end to Zope. The other provides the error pages when WSGI is not
+used. The ``Products.GroupServer.groupserver.GroupserverSite`` class
+catches the errors and redirects to the Not Found or Unexpected pages as
+appropriate.
 
 Not Found (404)
 ---------------
@@ -37,20 +48,17 @@ Internal          Email support on the current site.
 A direct link     Check what was typed, or if the link was broken over a line.
 ================  =============================================================
 
-Forbidden (403)
----------------
-
-If the user is logged in, and a Forbidden error is raised then this error
-is shown. If the user is logged out (anonymous) then he or she is shown the
-Login page (``gs.login``).
-
 Unexpected (500)
 ----------------
 
-The Unexpected Error page is shown when any other exception is
-thrown. Often it is triggered by ``assert`` statements. The ``assert``
-message will be shown on this page, which is why it is very important that
-the messages are human-readable.
+The Unexpected Error page is shown when an exception other than Not Found
+is thrown. The last line of the Python traceback is shown on this page, and
+in the email to Support. The traceback is described as "technical
+information", to mitigate problems caused by the confusing data being shown
+to non-technical participants.
+
+Going to ``/fail`` will trigger an assertion error, which can be used to
+test the Unexpected page.
 
 Design
 ======
@@ -87,6 +95,14 @@ will make debugging easier (which is important as we will see our error
 pages more than anyone else). This information is placed at the bottom of
 the page in a ``<div>`` element with the ``technical`` ID. 
 
+Resources
+=========
+
+- Code repository: https://source.iopen.net/groupserver/gs.errormesg
+- Questions and comments to http://groupserver.org/groups/development
+- Report bugs at https://redmine.iopen.net/projects/groupserver
+
 .. _GroupServer: http://groupserver.org/
 .. _A More Useful 404: http://www.alistapart.com/articles/amoreuseful404/
 .. _alert text: http://developer.gnome.org/hig-book/stable/windows-alert.html.en#alert-text
+.. _infrae.wsgi: http://pypi.python.org/pypi/infrae.wsgi
