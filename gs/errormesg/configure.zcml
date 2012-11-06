@@ -19,10 +19,11 @@
     permission="zope2.Public" />
 
   <!-- The Unexpected Error (500) page -->
-  <!--browser:page 
+  <browser:page 
     for="*" 
     name="new_unexpected_error.html"
-    class=".unexpected.Unexpected" 
-    permission="zope2.Public" /-->
+    class=".unexpected.UnexpectedZope2" 
+    template="browser/templates/error.pt"
+    permission="zope2.Public" />
 
 </configure>
