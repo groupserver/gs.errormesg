@@ -37,17 +37,15 @@ class NotFoundZope2(BaseErrorPage):
 
     def __init__(self, context, request):
         super(NotFoundZope2, self).__init__(context, request)
-
-        self.requested = request.form.get('q', '')
+        self.errorUrl = self.requested = request.form.get('q', '')
 
         r = request.form.get('r', '')
-        self.referer = type(r) == list and r[0] or r
-        self.refererUrl = urlparse(self.referer)
+        self.refererUrl = type(r) == list and r[0] or r
 
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader('Content-Type', contentType)
         self.request.response.setStatus(self.status, lock=True)
-
+        
     def supportMessage(self):
         m = MESSAGE.format(url=self.requested, referer=self.refererUrl)
         retval = quote(m)

@@ -96,3 +96,4 @@ class BaseError(CoreError):
 class BaseErrorPage(BrowserView, CoreError):
     def __init__(self, context, request):
         BrowserView.__init__(self, context, request)
+        CoreError.__init__(self)

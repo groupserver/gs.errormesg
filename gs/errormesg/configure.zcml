@@ -14,7 +14,8 @@
   <browser:page 
     for="*" 
     name="new_not_found.html"
-    class=".notfound.NotFoundZope2" 
+    class=".notfound.NotFoundZope2"
+    template="browser/templates/not_found.pt"
     permission="zope2.Public" />
 
   <!-- The Unexpected Error (500) page -->
