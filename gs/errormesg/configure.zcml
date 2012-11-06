@@ -13,7 +13,7 @@
   <!-- The Not Found (404) page -->
   <browser:page 
     for="*" 
-    name="new_not_found.html"
+    name="not_found.html"
     class=".notfound.NotFoundZope2"
     template="browser/templates/not_found.pt"
     permission="zope2.Public" />
@@ -21,7 +21,7 @@
   <!-- The Unexpected Error (500) page -->
   <browser:page 
     for="*" 
-    name="new_unexpected_error.html"
+    name="unexpected_error.html"
     class=".unexpected.UnexpectedZope2" 
     template="browser/templates/error.pt"
     permission="zope2.Public" />
