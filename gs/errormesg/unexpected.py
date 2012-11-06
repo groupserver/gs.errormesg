@@ -16,6 +16,9 @@ This technical information may help you fix the error:
 {message}
 '''
 
+# TODO: Clean up some of the cut-n-paste software engineering.
+
+
 class UnexpectedError(BaseError, grok.View):
     grok.name('error.html')
     grok.context(Exception)
@@ -44,16 +47,19 @@ class UnexpectedZope2(BaseErrorPage):
 
     def __init__(self, context, request):
         super(UnexpectedZope2, self).__init__(context, request)
-        self.errorUrl = self.requested = request.form.get('q', '')
-
-        self.traceback = request.form.get('m', '')
-        self.tracebackMessage = self.traceback.strip().split('\n')[-1]
 
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader('Content-Type', contentType)
         self.request.response.setStatus(self.status, lock=True)
         
+    def tracebackMessage(self):
+        # obviously this is only going to work if we're *actually* handling an
+        # exception
+        formatted_tb = traceback.format_exc()
+        return formatted_tb.splitlines()[-1].strip()
+
     def supportMessage(self):
-        m = MESSAGE.format(url=self.requested, message=self.traceback)
+        tracebackMessage = self.tracebackMessage()
+        m = MESSAGE.format(url=self.errorUrl, message=tracebackMessage)
         retval = quote(m)
         return retval
