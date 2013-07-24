@@ -5,7 +5,7 @@ from five import grok
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from baseerror import BaseError, BaseErrorPage
 
-MESSAGE = u'''Hi! I saw a Server Error (500) page when I went to 
+MESSAGE = u'''Hi! I saw a Server Error (500) page when I went to
 {url}
 
 I want to see...
@@ -51,7 +51,7 @@ class UnexpectedZope2(BaseErrorPage):
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader('Content-Type', contentType)
         self.request.response.setStatus(self.status, lock=True)
-        
+
     def tracebackMessage(self):
         # obviously this is only going to work if we're *actually* handling an
         # exception

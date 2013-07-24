@@ -1,6 +1,5 @@
 # -*- coding: utf-8 *-*
 from urllib import quote
-from urlparse import urlparse
 from five import grok
 from zope.publisher.interfaces import INotFound
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -41,7 +40,7 @@ class NotFoundZope2(BaseErrorPage):
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader('Content-Type', contentType)
         self.request.response.setStatus(self.status, lock=True)
-        
+
     def supportMessage(self):
         m = MESSAGE.format(url=self.errorUrl, referer=self.refererUrl)
         retval = quote(m)
