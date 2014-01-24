@@ -1,61 +1,61 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:metal="http://xml.zope.org/namespaces/metal"
-  xmlns:tal="http://xml.zope.org/namespaces/tal"
-  metal:use-macro="context/@@groupserver_site_home_layout/page">
-    <head>
-      <title metal:fill-slot="title">
-        Server Error (500):
-        <tal:block replace="view/siteInfo/get_name"/>
-      </title>
-      <tal:block metal:fill-slot="metadata-global">&#160;</tal:block>
-      <tal:block metal:fill-slot="metadata">
-        <meta name="author" content="OnlineGroups.Net" />
-        <meta name="description" content="Server error page" />
-      </tal:block>
-    </head>
-     <body>
-      <div metal:fill-slot="sitenavigation" id="sitenavigation"
-        class="tabs ui-tabs ui-widget">
-        <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
-          <li class="ui-state-default ui-corner-top">
-            <a href="/">Home</a>
-          </li>
-        </ul>
+      xmlns:metal="http://xml.zope.org/namespaces/metal"
+      xmlns:tal="http://xml.zope.org/namespaces/tal"
+      metal:use-macro="context/@@groupserver_site_home_layout/page">
+  <head>
+    <title metal:fill-slot="title">
+      Server Error (500):
+      <tal:block replace="view/siteInfo/get_name"/>
+    </title>
+    <tal:block metal:fill-slot="metadata-global">&#160;</tal:block>
+    <tal:block metal:fill-slot="metadata">
+      <meta name="author" content="OnlineGroups.Net" />
+      <meta name="description" content="Server error page" />
+    </tal:block>
+  </head>
+  <body>
+    <div metal:fill-slot="sitenavigation" id="sitenavigation"
+         class="tabs ui-tabs ui-widget">
+      <ul class="ui-tabs-nav ui-helper-reset ui-helper-clearfix">
+        <li class="ui-state-default ui-corner-top">
+          <a href="/">Home</a>
+        </li>
+      </ul>
+    </div>
+    <div metal:fill-slot="externallinks"></div>
+    <div metal:fill-slot="contextnavigation"></div>
+    <div metal:fill-slot="breadcrumb"></div>
+    <div metal:fill-slot="footer"></div>
+    <div metal:fill-slot="search"></div>
+    <div metal:fill-slot="utilitylinks">
+      <!-- All links here are supressed to make it less cluttered -->
+    </div>
+    <div metal:fill-slot="body">
+      <h1>Sorry! We've had trouble producing this page.</h1>
+      <div id="todo">
+        <p>
+          Please
+          <a href="#" class="email"
+             tal:attributes="href string:mailto:${view/supportEmail}?Subject=Unexpected%20Error&amp;body=${view/supportMessage}">email
+          support</a>
+          and we will see what we can do to fix the problem.
+        </p>
       </div>
-      <div metal:fill-slot="externallinks"></div>
-      <div metal:fill-slot="contextnavigation"></div>
-      <div metal:fill-slot="breadcrumb"></div>
-      <div metal:fill-slot="footer"></div>
-      <div metal:fill-slot="search"></div>
-      <div metal:fill-slot="utilitylinks">
-        <!-- All links here are supressed to make it less cluttered -->
-      </div>
-      <div metal:fill-slot="body">
-        <h1>Sorry! We've had trouble producing this page.</h1>
-        <div id="todo">
-          <p>
-            Please
-            <a href="#" class="email"
-              tal:attributes="href string:mailto:${view/supportEmail}?Subject=Unexpected%20Error&amp;body=${view/supportMessage}">email
-                support</a> 
-            and we will see what we can do to fix the problem.
-          </p>
-        </div> 
-        <div id="technical">
-          <p>Technical Description:
-            <code class="error"><span class="val">500</span>
-              <span class="description">Internal Server Error</span></code>
-          </p>
-          <p>
-            <span class="detail">URL: 
-              <code class="val url"
+      <div id="technical">
+        <p>Technical Description:
+        <code class="error"><span class="val">500</span>
+        <span class="description">Internal Server Error</span></code>
+        </p>
+        <p>
+          <span class="detail">URL:
+          <code class="val url"
                 tal:content="view/errorUrl">http://some.site</code></span>
-          </p>
-          <p>Issue:
-            <code class="message" 
+        </p>
+        <p>Issue:
+        <code class="message"
               tal:content="view/tracebackMessage">err</code>
-          </p>
-        </div>
-      </div> 
-    </body>
+        </p>
+      </div>
+    </div>
+  </body>
 </html>
