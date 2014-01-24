@@ -1,7 +1,21 @@
-# -*- coding: utf-8 *-*
+# -*- coding: utf-8 -*-
+##############################################################################
+#
+# Copyright © 2014 OnlineGroups.net and Contributors.
+# All Rights Reserved.
+#
+# This software is subject to the provisions of the Zope Public License,
+# Version 2.1 (ZPL).  A copy of the ZPL should accompany this distribution.
+# THIS SOFTWARE IS PROVIDED "AS IS" AND ANY AND ALL EXPRESS OR IMPLIED
+# WARRANTIES ARE DISCLAIMED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED
+# WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
+# FOR A PARTICULAR PURPOSE.
+#
+##############################################################################
+from __future__ import absolute_import, unicode_literals
 from infrae.wsgi.publisher import *
 from zope.publisher.interfaces.browser import IBrowserView
-from baseerror import BaseError  # lint:ok
+from .baseerror import BaseError  # lint:ok
 
 import logging
 log = logging.getLogger('gs.errormesg')
@@ -34,7 +48,7 @@ def error(self, error, last_known_obj):
         except Exception as error:
             log_last_error(
                 self.request, self.response, obj=last_known_obj,
-                extra=u"Error while rendering error message")
+                extra="Error while rendering error message")
             self.response.setStatus(500)
             self.response.setBody(ERROR_WHILE_RENDERING_ERROR_TEMPLATE)
     else:
