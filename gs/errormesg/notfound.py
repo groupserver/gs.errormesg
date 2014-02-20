@@ -17,6 +17,7 @@ from urllib import quote
 from five import grok
 from zope.publisher.interfaces import INotFound
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from gs.core import to_ascii
 from .baseerror import BaseError, BaseErrorPage
 
 MESSAGE = '''Hi! I saw a Not Found (404) page when I went to
@@ -52,7 +53,8 @@ class NotFoundZope2(BaseErrorPage):
         super(NotFoundZope2, self).__init__(context, request)
 
         contentType = 'text/html; charset=UTF-8'
-        self.request.response.setHeader('Content-Type', contentType)
+        self.request.response.setHeader(to_ascii('Content-Type'),
+                                        to_ascii(contentType))
         self.request.response.setStatus(self.status, lock=True)
 
     def supportMessage(self):

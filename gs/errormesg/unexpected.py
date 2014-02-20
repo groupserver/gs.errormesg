@@ -17,6 +17,7 @@ import traceback
 from urllib import quote
 from five import grok
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
+from gs.core import to_ascii
 from .baseerror import BaseError, BaseErrorPage
 
 MESSAGE = '''Hi! I saw a Server Error (500) page when I went to
@@ -63,7 +64,8 @@ class UnexpectedZope2(BaseErrorPage):
         super(UnexpectedZope2, self).__init__(context, request)
 
         contentType = 'text/html; charset=UTF-8'
-        self.request.response.setHeader('Content-Type', contentType)
+        self.request.response.setHeader(to_ascii('Content-Type'),
+                                        to_ascii(contentType))
         self.request.response.setStatus(self.status, lock=True)
 
     def tracebackMessage(self):

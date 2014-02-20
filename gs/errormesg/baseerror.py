@@ -12,11 +12,13 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+from __future__ import unicode_literals
 import re
 from urlparse import urlparse
 from zope.cachedescriptors.property import Lazy
 from zope.component import createObject
 from Products.Five import BrowserView
+from gs.core import to_ascii
 from Products.XWFCore.XWFUtils import get_support_email
 
 
@@ -101,7 +103,8 @@ class BaseError(CoreError):
 
     def render(self):
         # force the return type to be text/html, just in case
-        self.response.setHeader('Content-Type', 'text/html')
+        self.response.setHeader(to_ascii('Content-Type'),
+                                to_ascii('text/html'))
         return self.index(self.context)
 
 
