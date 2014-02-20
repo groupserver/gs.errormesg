@@ -53,6 +53,7 @@ setup(name='gs.errormesg',
         'zope.security',
         'Zope2',
         'gs.content.layout',
+        'gs.core',
     ],
     entry_points="""
     # -*- Entry points: -*-
