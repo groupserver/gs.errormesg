@@ -42,5 +42,4 @@ Referer: %(referer)s
        'referer': self.refererUrl}
 
         retval = quote(m)
-
         return retval
