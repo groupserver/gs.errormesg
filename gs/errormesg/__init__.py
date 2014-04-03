@@ -13,18 +13,23 @@
 #
 ##############################################################################
 from __future__ import absolute_import, unicode_literals
-from infrae.wsgi.publisher import *
-from zope.publisher.interfaces.browser import IBrowserView
-from .baseerror import BaseError  # lint:ok
-
-import logging
-log = logging.getLogger('gs.errormesg')
+#from infrae.wsgi.publisher import *
+from logging import getLogger
+log = getLogger('gs.errormesg')
 log.info('Monkeypatching infrae.wsgi')
+from infrae.wsgi.errors import DefaultError
+from infrae.wsgi.log import logger, log_last_error
+from infrae.wsgi.publisher import ERROR_WHILE_RENDERING_ERROR_TEMPLATE, \
+    DEFAULT_ERROR_TEMPLATE, WSGIPublication
+from zope.component import queryMultiAdapter
+from zope.publisher.interfaces.browser import IBrowserView
+from zope.site.hooks import getSite
+from Acquisition.interfaces import IAcquirer
+from .baseerror import BaseError  # lint:ok
 
 
 def error(self, error, last_known_obj):
-    """Render and log an error.
-    """
+    """Render and log an error."""
     # This is the patch ... in the original IBrowserView is IBrowserPage
     if IBrowserView.providedBy(last_known_obj):
         #of the last obj is a view, use it's context (which should be
