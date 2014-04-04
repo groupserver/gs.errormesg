@@ -16,7 +16,6 @@ from __future__ import absolute_import, unicode_literals
 #from infrae.wsgi.publisher import *
 from logging import getLogger
 log = getLogger('gs.errormesg')
-log.info('Monkeypatching infrae.wsgi')
 from infrae.wsgi.errors import DefaultError
 from infrae.wsgi.log import logger, log_last_error
 from infrae.wsgi.publisher import ERROR_WHILE_RENDERING_ERROR_TEMPLATE, \
@@ -61,4 +60,6 @@ def error(self, error, last_known_obj):
         self.response.setStatus(500)
         self.response.setBody(DEFAULT_ERROR_TEMPLATE)
 
-WSGIPublication.error = error
+if hasattr(WSGIPublication, 'error'):
+    log.info('Monkeypatching infrae.wsgi')
+    WSGIPublication.error = error
