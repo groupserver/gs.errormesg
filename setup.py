@@ -12,17 +12,22 @@
 # FOR A PARTICULAR PURPOSE.
 #
 ##############################################################################
+import codecs
 import os
 from setuptools import setup, find_packages
 from version import get_version
 
 version = get_version()
 
+with codecs.open('README.txt', encoding='utf-8') as f:
+    long_description = f.read()
+with codecs.open(os.path.join("docs", "HISTORY.txt"), encoding='utf-8') as f:
+    long_description += '\n' + f.read()
+
 setup(name='gs.errormesg',
     version=version,
     description="GroupServer standard error messages",
-    long_description=open("README.txt").read() + "\n" +
-                      open(os.path.join("docs", "HISTORY.txt")).read(),
+    long_description=long_description,
     classifiers=[
         'Development Status :: 5 - Production/Stable',
         "Environment :: Web Environment",
@@ -30,14 +35,16 @@ setup(name='gs.errormesg',
         "Intended Audience :: Developers",
         'License :: OSI Approved :: Zope Public License',
         "Natural Language :: English",
-        "Operating System :: POSIX :: Linux"
+        "Operating System :: POSIX :: Linux",
         "Programming Language :: Python",
         "Topic :: Software Development :: Libraries :: Python Modules",
       ],
-    keywords='error 404 groupserver',
-    author='Michael JasonSmith',
-    author_email='mpj17@onlinegroups.net',
-    url='http://www.onlinegroups.net/',
+    keywords='error, 404, 502, groupserver',
+    author='Richard Waid',
+    author_email='richard@onlinegroups.net',
+    maintainer='Michael JasonSmith',
+    maintainer_email='mpj17@onlinegroups.net',
+    url='https://source.iopen.net/groupserver/gs.content.form.base/',
     license='ZPL 2.1',
     packages=find_packages(exclude=['ez_setup']),
     namespace_packages=['gs', ],
