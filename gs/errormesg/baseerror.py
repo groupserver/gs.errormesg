@@ -51,17 +51,19 @@ class CoreError(object):
     def refererUrl(self):
         # we pretty much ignore errors. There is bugger all we can do
         # about an error in a error
+        u = 'http://#unknownRefUrl'
         try:
-            return self.context.REQUEST.get('HTTP_REFERER', 'http://#unknown')
+            return self.context.REQUEST.get('HTTP_REFERER', u)
         except:
-            return 'http://#unknown'
+            return u
 
     @Lazy
     def errorUrl(self):
+        u = 'http://#unknownErrUrl'
         try:
-            return self.context.REQUEST.get('URL', 'http://#unknown')
+            return self.request.REQUEST.get('URL', u)
         except:
-            return 'http://#unknown'
+            return u
 
     @Lazy
     def internalRequest(self):
