@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,9 +11,12 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import, unicode_literals
-from urllib import quote
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
 from five import grok
 from zope.publisher.interfaces import INotFound
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
@@ -55,7 +58,7 @@ class NotFoundZope2(BaseErrorPage):
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader(to_ascii('Content-Type'),
                                         to_ascii(contentType))
-        self.request.response.setStatus(self.status, lock=True)
+        self.request.response.setStatus(self.status)  # , lock=True)
 
     def supportMessage(self):
         m = MESSAGE.format(url=self.errorUrl, referer=self.refererUrl)

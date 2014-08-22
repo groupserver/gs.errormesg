@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-##############################################################################
+############################################################################
 #
 # Copyright © 2014 OnlineGroups.net and Contributors.
 # All Rights Reserved.
@@ -11,10 +11,13 @@
 # WARRANTIES OF TITLE, MERCHANTABILITY, AGAINST INFRINGEMENT, AND FITNESS
 # FOR A PARTICULAR PURPOSE.
 #
-##############################################################################
+############################################################################
 from __future__ import absolute_import, unicode_literals
 import traceback
-from urllib import quote
+try:
+    from urllib.parse import quote
+except ImportError:
+    from urllib import quote
 from five import grok
 from Products.Five.browser.pagetemplatefile import ZopeTwoPageTemplateFile
 from gs.core import to_ascii
@@ -41,8 +44,8 @@ class UnexpectedError(BaseError, grok.View):
     status = 500
 
     def tracebackMessage(self):
-        # obviously this is only going to work if we're *actually* handling an
-        # exception
+        # obviously this is only going to work if we're *actually* handling
+        # an exception
         formatted_tb = traceback.format_exc()
         return formatted_tb.splitlines()[-1].strip()
 
@@ -66,11 +69,11 @@ class UnexpectedZope2(BaseErrorPage):
         contentType = 'text/html; charset=UTF-8'
         self.request.response.setHeader(to_ascii('Content-Type'),
                                         to_ascii(contentType))
-        self.request.response.setStatus(self.status, lock=True)
+        self.request.response.setStatus(self.status)  # , lock=True)
 
     def tracebackMessage(self):
-        # obviously this is only going to work if we're *actually* handling an
-        # exception
+        # obviously this is only going to work if we're *actually* handling
+        # an exception
         formatted_tb = traceback.format_exc()
         return formatted_tb.splitlines()[-1].strip()
 
